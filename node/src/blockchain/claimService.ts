@@ -132,7 +132,7 @@ export class ClaimService {
     return results
   }
 
-  async createOrUpdateClaimInfo(claim: PureClaim, blockMetadata: BlockMetadata, claimOrder?: number) {
+  protected async createOrUpdateClaimInfo(claim: PureClaim, blockMetadata: BlockMetadata, claimOrder?: number): Promise<ClaimInfo> {
     const blockMetadataToClaimInfoLike = (blockMetadata: BlockMetadata) => ({
       ...blockMetadata, // BlockMetadata and ClaimInfo share most properties...
       hash: claim.id, // except 'hash', which is the claim.id in ClaimInfo...
@@ -147,7 +147,7 @@ export class ClaimService {
       ? this.claimInfoRepository.merge(existent, newData)
       : this.claimInfoRepository.create(newData)
 
-    await this.claimInfoRepository.persist(entity)
+    return this.claimInfoRepository.persist(entity)
   }
 
   async getBlock(id: string) {
