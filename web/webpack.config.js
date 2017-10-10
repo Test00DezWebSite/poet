@@ -3,6 +3,13 @@ const path = require('path');
 const webpack = require('webpack');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const ExtractTextPlugin = require("extract-text-webpack-plugin");
+const CopyWebpackPlugin = require('copy-webpack-plugin');
+
+const production = process.env.NODE_ENV === 'production'
+const configurationPath = production ? './env/production.json' : './env/development.json'
+
+console.log("NODE_ENV: ", process.env.NODE_ENV)
+console.log("Path configuration: ", configurationPath)
 
 const vendor = [
   'history',
@@ -25,10 +32,7 @@ const vendor = [
   'socket.io-client',
 ];
 
-const production = !!process.env['PRODUCTION'];
-
 const extractor = new ExtractTextPlugin("styles.css")
-
 
 module.exports = {
   entry: {
@@ -51,7 +55,7 @@ module.exports = {
   },
 
   // Enable sourcemaps for debugging webpack's output.
-  devtool: production ? 'cheap-module-source-map' : 'eval',
+  devtool: production ? '' : 'eval',
 
   resolve: {
     root: [
@@ -59,7 +63,10 @@ module.exports = {
       path.resolve('./node_modules/'),
     ],
     extensions: ['', '.webpack.js', '.web.js', '.ts', '.tsx', '.js', '.json'],
-    fallback: path.join(__dirname, "node_modules")
+    fallback: path.join(__dirname, "node_modules"),
+    alias: {
+      Configuration: path.resolve(configurationPath)
+    }
   },
 
   resolveLoader: {
@@ -104,7 +111,6 @@ module.exports = {
     new webpack.optimize.CommonsChunkPlugin({ name: 'meta', chunks: ['vendor'], filename: "meta.js" }),
     new HtmlWebpackPlugin({ title: 'Poet App', template: 'src/index.html' }),
     extractor,
-    new webpack.optimize.OccurrenceOrderPlugin(),
     new webpack.optimize.DedupePlugin(),
     new webpack.NoErrorsPlugin(),
     new webpack.DefinePlugin({
@@ -112,6 +118,13 @@ module.exports = {
         'NODE_ENV': JSON.stringify('production')
       }
     }),
+    new CopyWebpackPlugin([
+      {
+        from: "./_redirects",
+        to: "./_redirects",
+        toType: "file"
+      },
+    ])
   ]
   : [
     new webpack.optimize.CommonsChunkPlugin({ name: "vendor", filename: "vendor.js" }),
@@ -119,6 +132,6 @@ module.exports = {
     new HtmlWebpackPlugin({ title: 'Poet App', template: 'src/index.html' }),
     extractor,
     new webpack.HotModuleReplacementPlugin(),
-    new webpack.NoErrorsPlugin(),
+    new webpack.NoErrorsPlugin()
   ]
 };
