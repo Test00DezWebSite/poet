@@ -6,7 +6,15 @@ const ExtractTextPlugin = require("extract-text-webpack-plugin");
 const CopyWebpackPlugin = require('copy-webpack-plugin');
 
 const production = process.env.NODE_ENV === 'production'
-const configurationPath = production ? './env/production.json' : './env/development.json'
+
+const environment = {
+  development: './env/development.json',
+  testing: './env/testing.json',
+  staging: './env/staging.json',
+  production: './env/production.json'
+}
+
+const configurationPath = environment[process.env.NODE_ENV]
 
 console.log("NODE_ENV: ", process.env.NODE_ENV)
 console.log("Path configuration: ", configurationPath)
@@ -132,6 +140,13 @@ module.exports = {
     new HtmlWebpackPlugin({ title: 'Poet App', template: 'src/index.html' }),
     extractor,
     new webpack.HotModuleReplacementPlugin(),
-    new webpack.NoErrorsPlugin()
+    new webpack.NoErrorsPlugin(),
+    new CopyWebpackPlugin([
+      {
+        from: "./_redirects",
+        to: "./_redirects",
+        toType: "file"
+      },
+    ])
   ]
 };
