@@ -1,13 +1,13 @@
 import { Queue } from '../queue'
-import { default as Insight } from '../insight'
+import { PoetInsightListener as Insight } from '../insight'
 
 export async function publish(id: string) {
   const queue = new Queue()
 
-  const insight = new Insight('https://test-insight.bitpay.com')
+  const insight = new Insight('https://test-insight.bitpay.com', '', [0] )
   const bitcoinBlock = await insight.manageNewBlock(id)
-
-  await queue.announceBitcoinBlock(bitcoinBlock)
+  //TODO need fix
+  //await queue.announceBitcoinBlock(bitcoinBlock)
 
 }
 

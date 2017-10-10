@@ -25,11 +25,19 @@ const defaultConfiguration: ConnectionConfiguration = {
   }
 }
 
+const isDevelopment = () => {
+  return process.env.NODE_ENV === 'development'
+}
+
+const getExtension = () => {
+  return isDevelopment() ? 'js' : 'ts'
+}
+
 const entities = [
-  path.join(__dirname, 'orm', '*.ts'),
-  path.join(__dirname, 'orm', 'domain', '*.ts'),
-  path.join(__dirname, 'orm', 'bitcoin', '*.ts'),
-  path.join(__dirname, 'orm', 'events', '*.ts')
+  path.join(__dirname, 'orm', `*.${getExtension()}`),
+  path.join(__dirname, 'orm', 'domain', `*.${getExtension()}`),
+  path.join(__dirname, 'orm', 'bitcoin', `*.${getExtension()}`),
+  path.join(__dirname, 'orm', 'events', `*.${getExtension()}`)
 ]
 
 export async function getConnection(configuration?: Partial<ConnectionConfiguration>) {

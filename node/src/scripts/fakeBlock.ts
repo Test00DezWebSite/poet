@@ -1,5 +1,5 @@
-import { Queue } from '../src/queue'
-import { BitcoinBlockMetadata } from '../src/events'
+import { Queue } from '../queue'
+import { BitcoinBlockMetadata } from '../events'
 
 export async function publish(id: string) {
   const queue = new Queue()
@@ -8,6 +8,7 @@ export async function publish(id: string) {
     blockHeight: 1000,
     blockHash: 'bitcoin block hash',
     timestamp: 3543,
+    parentHash: '',
     poet: [{
       torrentHash: id,
       transactionHash: 'transaction hash',

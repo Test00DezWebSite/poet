@@ -5,6 +5,8 @@
   "main": "./src/index.js",
   "scripts": {
     "build": "tsc",
+    "build:watch": "tsc -w",
+    "build:emitfile": "tsc  --listEmittedFiles",
     "auth-server": "./node_modules/.bin/ts-node ./src/bin/authServer.ts",
     "bitcoin-scanner": "./node_modules/.bin/ts-node ./src/bin/bitcoinScanner.ts",
     "claims-to-db": "./node_modules/.bin/ts-node ./src/bin/claimsToDb.ts",
@@ -13,7 +15,16 @@
     "notifications": "./node_modules/.bin/ts-node ./src/bin/notifications.ts",
     "retry-eval": "./node_modules/.bin/ts-node ./src/bin/retryEval.ts",
     "torrent-system": "./node_modules/.bin/ts-node ./src/bin/torrentSystem.ts",
-    "trusted-publisher": "./node_modules/.bin/ts-node ./src/bin/trustedPublisher.ts"
+    "trusted-publisher": "./node_modules/.bin/ts-node ./src/bin/trustedPublisher.ts",
+    "auth-server-debug": "nodemon --watch ./dist --inspect=0.0.0.0:5850 --nolazy ./dist/bin/authServer.js",
+    "bitcoin-scanner-debug": "nodemon --watch ./dist --inspect=0.0.0.0:5851 --nolazy ./dist/bin/bitcoinScanner.js",
+    "claims-to-db-debug": "nodemon --watch ./dist --inspect=0.0.0.0:5852 --nolazy ./dist/bin/claimsToDb.js",
+    "explorer-api-debug": "nodemon --watch ./dist --inspect=0.0.0.0:5853 --nolazy ./dist/bin/explorerApi.js",
+    "mock-signer-debug": "nodemon --watch ./dist --inspect=0.0.0.0:5854 --nolazy ./dist/bin/mockSigner.js",
+    "notifications-debug": "nodemon --watch ./dist --inspect=0.0.0.0:5855 --nolazy ./dist/bin/notifications.js",
+    "retry-eval-debug": "nodemon --watch ./dist --inspect=0.0.0.0:5856 --nolazy ./dist/bin/retryEval.js",
+    "torrent-system-debug": "nodemon --watch ./dist --inspect=0.0.0.0:5857 --nolazy ./dist/bin/torrentSystem.js",
+    "trusted-publisher-debug": "nodemon --watch ./dist --inspect=0.0.0.0:5858 --nolazy ./dist/bin/trustedPublisher.js"
   },
   "repository": {
     "type": "git",
@@ -72,7 +83,7 @@
     "reflect-metadata": "^0.1.9",
     "rx": "^4.1.0",
     "socket.io-client": "^1.7.2",
-    "ts-node": "^2.0.0",
+    "ts-node": "^3.3.0",
     "typeorm": "0.0.6",
     "typescript": "2.3.4",
     "webtorrent-hybrid": "^1.0.5"

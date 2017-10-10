@@ -1,0 +1,174 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "type": "node",
+            "request": "attach",
+            "name": "Po.et - Auth",
+            "address": "localhost",
+            "port": 5850,
+            "sourceMaps": true,
+            "protocol": "inspector",
+            "restart": true,
+            "stopOnEntry": true,
+            "trace": "all",
+            "localRoot": "${workspaceRoot}/node/src",
+            "remoteRoot": "/poet/src",
+            "outFiles": [
+                "${workspaceRoot}/node/dist/**/*.js"
+            ]
+        },
+        {
+            "type": "node",
+            "request": "attach",
+            "name": "Po.et - Bitcoin scanner",
+            "address": "localhost",
+            "port": 5851,
+            "sourceMaps": true,
+            "protocol": "inspector",
+            "restart": true,
+            "stopOnEntry": true,
+            "trace": "all",
+            "localRoot": "${workspaceRoot}/node/src",
+            "remoteRoot": "/poet/src",
+            "outFiles": [
+                "${workspaceRoot}/node/dist/**/*.js"
+            ]
+        },
+        {
+            "type": "node",
+            "request": "attach",
+            "name": "Po.et - Claims to db",
+            "address": "localhost",
+            "port": 5852,
+            "sourceMaps": true,
+            "protocol": "inspector",
+            "restart": true,
+            "stopOnEntry": true,
+            "trace": "all",
+            "localRoot": "${workspaceRoot}/node/src",
+            "remoteRoot": "/poet/src",
+            "outFiles": [
+                "${workspaceRoot}/node/dist/**/*.js"
+            ]
+        },
+        {
+            "type": "node",
+            "request": "attach",
+            "name": "Po.et - Explorer api",
+            "address": "localhost",
+            "port": 5853,
+            "sourceMaps": true,
+            "protocol": "inspector",
+            "restart": true,
+            "stopOnEntry": true,
+            "trace": "all",
+            "localRoot": "${workspaceRoot}/node/src",
+            "remoteRoot": "/poet/src",
+            "outFiles": [
+                "${workspaceRoot}/node/dist/**/*.js"
+            ]
+        },
+        {
+            "type": "node",
+            "request": "attach",
+            "name": "Po.et - Mock signer",
+            "address": "localhost",
+            "port": 5854,
+            "sourceMaps": true,
+            "protocol": "inspector",
+            "restart": true,
+            "stopOnEntry": true,
+            "trace": "all",
+            "localRoot": "${workspaceRoot}/node/src",
+            "remoteRoot": "/poet/src",
+            "outFiles": [
+                "${workspaceRoot}/node/dist/**/*.js"
+            ]
+        },
+        {
+            "type": "node",
+            "request": "attach",
+            "name": "Po.et - Notifications",
+            "address": "localhost",
+            "port": 5855,
+            "sourceMaps": true,
+            "protocol": "inspector",
+            "restart": true,
+            "stopOnEntry": true,
+            "trace": "all",
+            "localRoot": "${workspaceRoot}/node/src",
+            "remoteRoot": "/poet/src",
+            "outFiles": [
+                "${workspaceRoot}/node/dist/**/*.js"
+            ]
+        },
+        {
+            "type": "node",
+            "request": "attach",
+            "name": "Po.et - Retry eval",
+            "address": "localhost",
+            "port": 5856,
+            "sourceMaps": true,
+            "protocol": "inspector",
+            "restart": true,
+            "stopOnEntry": true,
+            "trace": "all",
+            "localRoot": "${workspaceRoot}/node/src",
+            "remoteRoot": "/poet/src",
+            "outFiles": [
+                "${workspaceRoot}/node/dist/**/*.js"
+            ]
+        },
+        {
+            "type": "node",
+            "request": "attach",
+            "name": "Po.et - Torrent system",
+            "address": "localhost",
+            "port": 5857,
+            "sourceMaps": true,
+            "protocol": "inspector",
+            "restart": true,
+            "stopOnEntry": true,
+            "trace": "all",
+            "localRoot": "${workspaceRoot}/node/src",
+            "remoteRoot": "/poet/src",
+            "outFiles": [
+                "${workspaceRoot}/node/dist/**/*.js"
+            ]
+        },
+        {
+            "type": "node",
+            "request": "attach",
+            "name": "Po.et - Trusted publisher",
+            "address": "localhost",
+            "port": 5858,
+            "sourceMaps": true,
+            "protocol": "inspector",
+            "restart": true,
+            "stopOnEntry": true,
+            "trace": "all",
+            "localRoot": "${workspaceRoot}/node/src",
+            "remoteRoot": "/poet/src",
+            "outFiles": [
+                "${workspaceRoot}/node/dist/**/*.js"
+            ]
+        }
+    ],
+    "compounds": [
+        {
+            "name": "Po.et - server",
+            "configurations": [
+                "Po.et - Auth", 
+                "Po.et - Bitcoin scanner",
+                "Po.et - Claims to db",
+                "Po.et - Explorer api",
+                "Po.et - Mock signer",
+                "Po.et - Notifications",
+                "Po.et - Retry eval",
+                "Po.et - Torrent system",
+                "Po.et - Trusted publisher"
+            ]
+        }
+    ]
+}

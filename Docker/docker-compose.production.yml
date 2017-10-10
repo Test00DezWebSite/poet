@@ -2,6 +2,8 @@ version: "3"
 
 services:
   auth:
+    env_file:
+      - ./env/node/production.env
     build:
       context: ..
       dockerfile: ./Docker/auth.dockerfile
@@ -14,6 +16,8 @@ services:
     ports:
       - "5000:5000"
   notifications:
+    env_file:
+      - ./env/node/production.env
     build:
       context: ..
       dockerfile: ./Docker/notifications.dockerfile
@@ -27,6 +31,8 @@ services:
     ports:
       - "5500:5500"
   mock-signer:
+    env_file:
+      - ./env/node/production.env
     build:
       context: ..
       dockerfile: ./Docker/mock-signer.dockerfile
@@ -35,6 +41,8 @@ services:
     networks:
       - http
   bitcoin-scanner:
+    env_file:
+      - ./env/node/production.env
     build:
       context: ..
       dockerfile: ./Docker/bitcoin-scanner.dockerfile
@@ -44,6 +52,8 @@ services:
       - queue
       - outside
   claims-to-db:
+    env_file:
+      - ./env/node/production.env
     build:
       context: ..
       dockerfile: ./Docker/claims-to-db.dockerfile
@@ -54,6 +64,8 @@ services:
       - outside
       - db
   retry-eval:
+    env_file:
+      - ./env/node/production.env
     build:
       context: ..
       dockerfile: ./Docker/retry-eval.dockerfile
@@ -64,6 +76,8 @@ services:
       - outside
       - db
   explorer:
+    env_file:
+      - ./env/node/production.env
     build:
       context: ..
       dockerfile: ./Docker/explorer.dockerfile
@@ -73,6 +87,8 @@ services:
       - db
       - http
   torrent-system:
+    env_file:
+      - ./env/node/production.env
     build:
       context: ..
       dockerfile: ./Docker/torrent-system.dockerfile
@@ -87,6 +103,8 @@ services:
       - "15321:15321"
       - "7800:7800"
   trusted-publisher:
+    env_file:
+      - ./env/node/production.env
     build:
       context: ..
       dockerfile: ./Docker/trusted-publisher.dockerfile
@@ -101,6 +119,8 @@ services:
     depends_on:
       - explorer
   rabbitmq:
+    env_file:
+      - ./env/node/production.env
     build:
       context: ..
       dockerfile: ./Docker/queue.dockerfile
@@ -116,6 +136,8 @@ services:
     networks:
       - db
   web:
+    env_file:
+      - ./env/web/production.env
     build:
       context: ..
       dockerfile: ./Docker/web-poet-js-remote.dockerfile

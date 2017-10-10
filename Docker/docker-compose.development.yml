@@ -1,24 +1,51 @@
 version: "2"
 
 services:
-  auth:
+  compile:
+    env_file:
+      - ./env/node/development.env
     build:
       context: ..
-      dockerfile: ./Docker/auth.dockerfile
+      dockerfile: ./Docker/development/compile.dockerfile
     volumes:
       - ../node/src:/poet/src
+      - ../node/dist:/poet/dist
+  compile-watch:
+    env_file:
+      - ./env/node/development.env
+    build:
+      context: ..
+      dockerfile: ./Docker/development/compile-watch.dockerfile
+    volumes:
+      - ../node/src:/poet/src
+      - ../node/dist:/poet/dist
+  auth:
+    env_file:
+      - ./env/node/development.env
+    build:
+      context: ..
+      dockerfile: ./Docker/development/auth.dockerfile
+    volumes:
+      - ../node/src:/poet/src
+      - ../node/dist:/poet/dist
     networks:
       - http
       - queue
       - outside
     ports:
       - "5000:5000"
+      - "5850:5850"
+    depends_on:
+      - compile
   notifications:
+    env_file:
+      - ./env/node/development.env
     build:
       context: ..
-      dockerfile: ./Docker/notifications.dockerfile
+      dockerfile: ./Docker/development/notifications.dockerfile
     volumes:
       - ../node/src:/poet/src
+      - ../node/dist:/poet/dist
     networks:
       - http
       - queue
@@ -26,65 +53,104 @@ services:
       - db
     ports:
       - "5500:5500"
+      - "5855:5855"
+    depends_on:
+      - compile
   mock-signer:
+    env_file:
+      - ./env/node/development.env
     build:
       context: ..
-      dockerfile: ./Docker/mock-signer.dockerfile
+      dockerfile: ./Docker/development/mock-signer.dockerfile
     volumes:
       - ../node/src:/poet/src
+      - ../node/dist:/poet/dist
     networks:
       - http
       - outside
     ports:
       - "7000:7000"
+      - "5854:5854"
+    depends_on:
+      - compile
   bitcoin-scanner:
+    env_file:
+      - ./env/node/development.env
     build:
       context: ..
-      dockerfile: ./Docker/bitcoin-scanner.dockerfile
+      dockerfile: ./Docker/development/bitcoin-scanner.dockerfile
     volumes:
       - ../node/src:/poet/src
+      - ../node/dist:/poet/dist
     networks:
       - queue
       - outside
+    ports:
+      - "5851:5851"
+    depends_on:
+      - compile
   claims-to-db:
+    env_file:
+      - ./env/node/development.env
     build:
       context: ..
-      dockerfile: ./Docker/claims-to-db.dockerfile
+      dockerfile: ./Docker/development/claims-to-db.dockerfile
     volumes:
       - ../node/src:/poet/src
+      - ../node/dist:/poet/dist
     networks:
       - queue
       - outside
       - db
+    ports:
+      - "5852:5852"
+    depends_on:
+      - compile
   retry-eval:
+    env_file:
+      - ./env/node/development.env
     build:
       context: ..
-      dockerfile: ./Docker/retry-eval.dockerfile
+      dockerfile: ./Docker/development/retry-eval.dockerfile
     volumes:
       - ../node/src:/poet/src
+      - ../node/dist:/poet/dist
     networks:
       - queue
       - outside
       - db
+    ports:
+      - "5856:5856"
+    depends_on:
+      - compile
   explorer:
+    env_file:
+      - ./env/node/development.env
     build:
       context: ..
-      dockerfile: ./Docker/explorer.dockerfile
+      dockerfile: ./Docker/development/explorer.dockerfile
     volumes:
       - ../node/src:/poet/src
+      - ../node/dist:/poet/dist
     networks:
       - db
       - http
       - outside
     ports:
       - "4000:4000"
+      - "5853:5853"
+    depends_on:
+      - compile
   torrent-system:
+    env_file:
+      - ./env/node/development.env
     build:
       context: ..
-      dockerfile: ./Docker/torrent-system.dockerfile
+      dockerfile: ./Docker/development/torrent-system.dockerfile
     volumes:
       - ../node/src:/poet/src
       - ../node/torrents:/poet/torrents
+      - ../node/dist:/poet/dist
     networks:
       - queue
       - http
@@ -92,21 +158,31 @@ services:
     ports:
       - "15321:15321"
       - "7800:7800"
+      - "5857:5857"
+    depends_on:
+      - compile
   trusted-publisher:
+    env_file:
+      - ./env/node/development.env
     build:
       context: ..
-      dockerfile: ./Docker/trusted-publisher.dockerfile
+      dockerfile: ./Docker/development/trusted-publisher.dockerfile
     volumes:
       - ../node/src:/poet/src
+      - ../node/dist:/poet/dist
     networks:
       - queue
       - http
       - outside
     ports:
+      - "5858:5858"
       - "3001:3001"
     depends_on:
       - explorer
+      - compile
   rabbitmq:
+    env_file:
+      - ./env/node/development.env
     build:
       context: ..
       dockerfile: ./Docker/queue.dockerfile
@@ -122,6 +198,8 @@ services:
     networks:
       - db
   web:
+    env_file:
+      - ./env/web/development.env
     build:
       context: ..
       dockerfile: ./Docker/web-poet-js-local.dockerfile

@@ -6,7 +6,6 @@ node_modules
 npm-debug.log
 *.sw[a-z]
 torrents
-.vscode
 .DS_Store
 Docker/docker-compose.yaml
 Docker/node/config
