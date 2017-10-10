@@ -16,4 +16,4 @@ COPY ./web /web
 RUN sed -i -E 's/ws\:\/\/localhost\:5000/wss\:\/\/auth.po.et/g' /web/src/configuration.ts
 RUN sed -i -E 's/useMockSigner: true/useMockSigner: false/g' /web/src/configuration.ts
 
-CMD [ "npm", "start" ]
+CMD [ "npm", "run", "start:prod" ]

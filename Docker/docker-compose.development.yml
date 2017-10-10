@@ -127,6 +127,7 @@ services:
       dockerfile: ./Docker/web-poet-js-local.dockerfile
     volumes:
         - ../web/src:/web/src
+        - ../web/env:/web/env
     networks:
       - http
       - outside
