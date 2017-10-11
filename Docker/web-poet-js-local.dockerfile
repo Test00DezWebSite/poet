@@ -8,6 +8,7 @@ COPY ./web/package.json /web
 COPY ./web/tsconfig.json /web
 COPY ./web/webpack.config.js /web
 COPY ./web/devServer.js /web
+COPY ./web/_redirects /web
 
 RUN npm i
 

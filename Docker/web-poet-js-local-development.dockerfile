@@ -24,6 +24,7 @@ COPY ./poet/web/package.json /web
 COPY ./poet/web/tsconfig.json /web
 COPY ./poet/web/webpack.config.js /web
 COPY ./poet/web/devServer.js /web
+COPY ./web/_redirects /web
 
 RUN npm install
 RUN npm link poet-js
