@@ -92,7 +92,11 @@ export class Route<T> {
     })
     router.get('/' + this.resourcePath + '/:id', async (ctx) => {
       const item = await this.getItem(ctx.params.id)
-      ctx.body = await this.renderItem(item)
+      if (item) {
+        ctx.body = await this.renderItem(item)
+      } else {
+        ctx.response.status = 404
+      }
     })
   }
 }
