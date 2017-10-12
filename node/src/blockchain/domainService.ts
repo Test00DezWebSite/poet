@@ -18,6 +18,7 @@ import { ClaimService } from "./claimService"
 import { CertificationService } from "./certificatonService"
 import { ListenRules } from "./rules/listen"
 import { EventService } from './eventService'
+import { isNullOrUndefined } from 'util'
 
 export class BlockchainService extends ClaimService {
 
@@ -70,6 +71,9 @@ export class BlockchainService extends ClaimService {
 
   async getWorkFull(id: string) {
     const work = await this.getWork(id)
+    if (isNullOrUndefined(work)) {
+      return null
+    }
     work.claimInfo = await this.getClaimInfo(id)
     return await this.augmentWork(work)
   }

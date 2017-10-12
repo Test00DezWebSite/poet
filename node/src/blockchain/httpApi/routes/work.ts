@@ -7,6 +7,7 @@ import { BlockchainService } from '../../domainService'
 import { Route, QueryOptions } from '../route'
 import { OfferingRoute } from './offerings'
 import Work from '../../orm/domain/work'
+import { isNullOrUndefined } from 'util'
 
 interface WorkQueryOpts extends QueryOptions {
   owner?: string
@@ -53,6 +54,9 @@ export class WorkRoute extends Route<Work> {
 
   async getItem(id: string) {
     const work = await this.service.getWorkFull(id)
+    if (isNullOrUndefined(work)) {
+      return null
+    }
     const claim = await this.service.getClaim(id)
     const claimInfo = await this.service.getClaimInfo(id)
     return { claimInfo, ...claim, ...work }
