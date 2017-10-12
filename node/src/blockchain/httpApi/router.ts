@@ -9,6 +9,7 @@ import { LicenseRoute } from './routes/license'
 import { EventRoute } from './routes/events'
 import { NotificationsRoute } from './routes/notifications'
 import { BitcoinMalleabilityRoute } from './routes/bitcoin'
+import { BadgeRoute } from './routes/badge'
 
 export async function addRoutes(router: Router, service: BlockchainService) {
   // Placeholder for /node endpoint
@@ -24,4 +25,5 @@ export async function addRoutes(router: Router, service: BlockchainService) {
   new EventRoute(service).addRoutes(router)
   new NotificationsRoute(service).addRoutes(router)
   new BitcoinMalleabilityRoute(service).addRoutes(router)
+  new BadgeRoute(service).addRoutes(router)
 }
