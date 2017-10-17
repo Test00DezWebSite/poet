@@ -9,8 +9,9 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "build:development": "NODE_ENV=development webpack",
     "build:testing": "NODE_ENV=testing webpack",
-    "build:staging": "NODE_ENV=staging webpack", 
-    "build:production": "NODE_ENV=production webpack"
+    "build:staging": "NODE_ENV=staging webpack",
+    "build:production": "NODE_ENV=production webpack",
+    "start:build:production": "ws --rewrite '/api/* -> http://localhost:8080/api/$1' -d ./dist"
   },
   "keywords": [],
   "author": "",
@@ -59,7 +60,9 @@
     "file-loader": "^0.10.0",
     "html-webpack-plugin": "^2.25.0",
     "json-loader": "^0.5.4",
+    "json-proxy": "^0.9.3",
     "json-server": "^0.9.4",
+    "local-web-server": "^2.2.4",
     "node-sass": "^4.1.1",
     "postcss-loader": "^1.2.2",
     "react-hot-loader": "^1.3.1",
