@@ -11,7 +11,7 @@
     "build:testing": "NODE_ENV=testing webpack",
     "build:staging": "NODE_ENV=staging webpack",
     "build:production": "NODE_ENV=production webpack",
-    "start:build:production": "ws --rewrite '/api/* -> http://localhost:8080/api/$1' -d ./dist"
+    "start:build:production": "ws --spa index.html --rewrite '/api/* -> http://localhost:8080/api/$1' -d ./dist"
   },
   "keywords": [],
   "author": "",
