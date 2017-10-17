@@ -3,7 +3,7 @@
     "explorer": "/api/explorer",
     "user": "/api/user",
     "auth": {
-      "host": "http://localhost:3000",
+      "host": "",
       "path": "/api/auth"
     },
     "mockApp": "/api/mockApp",
