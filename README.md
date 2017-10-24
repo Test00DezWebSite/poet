@@ -65,8 +65,6 @@ All this information is read from the Postrgres database, which is fed by claims
 
 Runs on `/api/explorer`. For example: `http://localhost:3000/api/explorer/works`.
 
-> The url `/api/explorer` is currently configured in the frontend's webpack [devServer](https://github.com/poetapp/poet/blob/master/web/devServer.js#L22). It will be moved in the future.
-
 #### trusted-publisher
 
 Runs the REST API on which claims can be posted.
@@ -81,13 +79,9 @@ This system performs the following steps:
 
 Runs on `/api/user`. See [poet-feed-consumer](https://github.com/poetapp/feed-consumer) and [poet-feeds](https://github.com/poetapp/feeds) for examples on how to submit claims.
 
-> The url `/api/user` is currently configured in the frontend's webpack [devServer](https://github.com/poetapp/poet/blob/master/web/devServer.js#L30). It will be moved in the future.
-
 #### claims-to-db
 
 Processes all claims and stores them in the database.
-
-> TODO: Split "trusted" and "untrusted" claims
 
 #### auth-server
 
