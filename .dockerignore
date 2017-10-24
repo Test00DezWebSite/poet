@@ -2,4 +2,4 @@
 **/.git/*
 **/.idea/*
 ./Docker/postgres
-./node/torrents
+./torrents
