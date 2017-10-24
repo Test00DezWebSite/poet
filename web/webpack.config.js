@@ -1,30 +1,35 @@
-const path = require('path');
+const path = require('path')
+const assert = require('assert')
+const webpack = require('webpack')
+const HtmlWebpackPlugin = require('html-webpack-plugin')
+const ExtractTextPlugin = require('extract-text-webpack-plugin')
+const CopyWebpackPlugin = require('copy-webpack-plugin')
 
-const webpack = require('webpack');
-const HtmlWebpackPlugin = require('html-webpack-plugin');
-const ExtractTextPlugin = require("extract-text-webpack-plugin");
-const CopyWebpackPlugin = require('copy-webpack-plugin');
+const validEnvironments = [
+  'development',
+  'testing',
+  'staging',
+  'production',
+]
+const environment = process.env.NODE_ENV
 
-const production = process.env.NODE_ENV === 'production'
+assert(validEnvironments.includes(environment), `Invalid value for NODE_ENV: ${environment}. Valid values are: ${validEnvironments}`)
 
-const environment = {
-  development: './env/development.json',
-  testing: './env/testing.json',
-  staging: './env/staging.json',
-  production: './env/production.json'
-}
+const production = environment === 'production'
+const development = environment === 'development'
+const configurationPath = `./env/${environment}.json`
+const redirects = `./_redirects.${environment}`
 
-const configurationPath = environment[process.env.NODE_ENV]
-
-console.log("NODE_ENV: ", process.env.NODE_ENV)
-console.log("Path configuration: ", configurationPath)
+console.log("NODE_ENV: ", environment)
+console.log("Configuration Path: ", configurationPath)
+console.log("redirects: ", redirects)
 
 const vendor = [
   'history',
   'bitcore-lib',
-  'moment',
-  'uuid',
   'classnames',
+  'isomorphic-fetch',
+  'moment',
   'protobufjs',
   'react',
   'react-autocomplete',
@@ -38,31 +43,62 @@ const vendor = [
   'redux',
   'redux-saga',
   'socket.io-client',
+  'uuid',
 ];
 
 const extractor = new ExtractTextPlugin("styles.css")
 
+function getPlugins(environment) {
+  const plugins = [
+    new webpack.optimize.CommonsChunkPlugin({ name: "vendor", filename: "vendor.js" }),
+    new webpack.optimize.CommonsChunkPlugin({ name: 'meta', chunks: ['vendor'], filename: "meta.js" }),
+    extractor,
+    new HtmlWebpackPlugin({ title: 'Poet App', template: 'src/index.html' }),
+    new webpack.NoErrorsPlugin(),
+    new webpack.DefinePlugin({
+      'process.env': {
+        'NODE_ENV': JSON.stringify(environment)
+      }
+    }),
+  ]
+
+  const developmentPlugins = [
+    new webpack.HotModuleReplacementPlugin(),
+  ]
+
+  const nonDevelopmentPlugins = [
+    new webpack.optimize.DedupePlugin(),
+    new CopyWebpackPlugin([
+      {
+        from: redirects,
+        to: "./_redirects",
+        toType: "file"
+      },
+    ])
+  ]
+
+  return [
+    ...plugins,
+    ...(environment === 'development' ? developmentPlugins : nonDevelopmentPlugins)
+  ]
+}
+
 module.exports = {
   entry: {
-    'app': production
-    ? [
+    app: [
       './src/bootstrap.ts',
-      './src/index.tsx'
-    ]
-    : [
-      'webpack-hot-middleware/client',
-      './src/bootstrap.ts',
-      './src/index.tsx'
+      './src/index.tsx',
+      ...(development ? 'webpack-hot-middleware/client' : [])
     ],
-    'vendor': vendor
+    vendor
   },
+
   output: {
     filename: '[name].[hash].js',
     path: path.join(__dirname, 'dist'),
     publicPath: "/"
   },
 
-  // Enable sourcemaps for debugging webpack's output.
   devtool: production ? '' : 'eval',
 
   resolve: {
@@ -84,7 +120,6 @@ module.exports = {
 
   module: {
     loaders: [
-      // All files with a '.ts' or '.tsx' extension will be handled by 'awesome-typescript-loader'.
       { test: /\.tsx?$/, loaders: production
         ? ['babel', 'awesome-typescript-loader']
         : ['react-hot', 'babel', 'awesome-typescript-loader'] },
@@ -113,40 +148,5 @@ module.exports = {
     ];
   },
 
-  plugins: production
-  ? [
-    new webpack.optimize.CommonsChunkPlugin({ name: "vendor", filename: "vendor.js" }),
-    new webpack.optimize.CommonsChunkPlugin({ name: 'meta', chunks: ['vendor'], filename: "meta.js" }),
-    new HtmlWebpackPlugin({ title: 'Poet App', template: 'src/index.html' }),
-    extractor,
-    new webpack.optimize.DedupePlugin(),
-    new webpack.NoErrorsPlugin(),
-    new webpack.DefinePlugin({
-      'process.env': {
-        'NODE_ENV': JSON.stringify('production')
-      }
-    }),
-    new CopyWebpackPlugin([
-      {
-        from: "./_redirects",
-        to: "./_redirects",
-        toType: "file"
-      },
-    ])
-  ]
-  : [
-    new webpack.optimize.CommonsChunkPlugin({ name: "vendor", filename: "vendor.js" }),
-    new webpack.optimize.CommonsChunkPlugin({ name: 'meta', chunks: ['vendor'], filename: "meta.js" }),
-    new HtmlWebpackPlugin({ title: 'Poet App', template: 'src/index.html' }),
-    extractor,
-    new webpack.HotModuleReplacementPlugin(),
-    new webpack.NoErrorsPlugin(),
-    new CopyWebpackPlugin([
-      {
-        from: "./_redirects",
-        to: "./_redirects",
-        toType: "file"
-      },
-    ])
-  ]
+  plugins: getPlugins(environment)
 };

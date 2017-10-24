@@ -2,16 +2,15 @@
   "name": "poet-web",
   "version": "1.0.1",
   "description": "",
-  "main": "index.js",
   "scripts": {
     "start": "NODE_ENV=development node devServer.js",
-    "start:prod": "NODE_ENV=production node devServer.js",
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "start:production": "NODE_ENV=production node devServer.js",
     "build:development": "NODE_ENV=development webpack",
     "build:testing": "NODE_ENV=testing webpack",
     "build:staging": "NODE_ENV=staging webpack",
     "build:production": "NODE_ENV=production webpack",
-    "start:build:production": "ws --spa index.html --rewrite '/api/* -> http://localhost:8080/api/$1' -d ./dist"
+    "serve": "ws --spa index.html --rewrite '/api/* -> http://localhost:8080/api/$1' -d ./dist",
+    "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
   "author": "",
