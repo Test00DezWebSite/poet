@@ -1,7 +1,0 @@
-version: "2"
-
-services:
-  web:
-    build:
-      context: ../..
-      dockerfile: ./poet/Docker/web-poet-js-local.dockerfile
