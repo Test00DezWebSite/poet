@@ -1,6 +1,6 @@
 FROM poet-base
 
-COPY ["./node/config/bitcoin-scanner.json", "/etc/poet/bitcoin-scanner.json"]
+COPY ["./config/bitcoin-scanner.json", "/etc/poet/bitcoin-scanner.json"]
 
 VOLUME /poet/src
 VOLUME /poet/dist

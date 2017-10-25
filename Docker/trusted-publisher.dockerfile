@@ -1,6 +1,6 @@
 FROM poet-base
 
-COPY ["./node/config/trusted-publisher.json", "/etc/poet/trusted-publisher.json"]
+COPY ["./config/trusted-publisher.json", "/etc/poet/trusted-publisher.json"]
 
 VOLUME /poet/src
 

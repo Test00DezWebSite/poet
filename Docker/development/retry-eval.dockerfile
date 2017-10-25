@@ -1,6 +1,6 @@
 FROM poet-base
 
-COPY ["./node/config/retry-eval.json", "/etc/poet/retry-eval.json"]
+COPY ["./config/retry-eval.json", "/etc/poet/retry-eval.json"]
 
 VOLUME /poet/src
 VOLUME /poet/dist

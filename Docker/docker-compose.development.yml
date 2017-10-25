@@ -8,8 +8,8 @@ services:
       context: ..
       dockerfile: ./Docker/development/compile.dockerfile
     volumes:
-      - ../node/src:/poet/src
-      - ../node/dist:/poet/dist
+      - ../src:/poet/src
+      - ../dist:/poet/dist
   compile-watch:
     env_file:
       - ./env/node/development.env
@@ -17,8 +17,8 @@ services:
       context: ..
       dockerfile: ./Docker/development/compile-watch.dockerfile
     volumes:
-      - ../node/src:/poet/src
-      - ../node/dist:/poet/dist
+      - ../src:/poet/src
+      - ../dist:/poet/dist
   auth:
     env_file:
       - ./env/node/development.env
@@ -26,8 +26,8 @@ services:
       context: ..
       dockerfile: ./Docker/development/auth.dockerfile
     volumes:
-      - ../node/src:/poet/src
-      - ../node/dist:/poet/dist
+      - ../src:/poet/src
+      - ../dist:/poet/dist
     networks:
       - http
       - queue
@@ -44,8 +44,8 @@ services:
       context: ..
       dockerfile: ./Docker/development/notifications.dockerfile
     volumes:
-      - ../node/src:/poet/src
-      - ../node/dist:/poet/dist
+      - ../src:/poet/src
+      - ../dist:/poet/dist
     networks:
       - http
       - queue
@@ -63,8 +63,8 @@ services:
       context: ..
       dockerfile: ./Docker/development/mock-signer.dockerfile
     volumes:
-      - ../node/src:/poet/src
-      - ../node/dist:/poet/dist
+      - ../src:/poet/src
+      - ../dist:/poet/dist
     networks:
       - http
       - outside
@@ -80,8 +80,8 @@ services:
       context: ..
       dockerfile: ./Docker/development/bitcoin-scanner.dockerfile
     volumes:
-      - ../node/src:/poet/src
-      - ../node/dist:/poet/dist
+      - ../src:/poet/src
+      - ../dist:/poet/dist
     networks:
       - queue
       - outside
@@ -96,8 +96,8 @@ services:
       context: ..
       dockerfile: ./Docker/development/claims-to-db.dockerfile
     volumes:
-      - ../node/src:/poet/src
-      - ../node/dist:/poet/dist
+      - ../src:/poet/src
+      - ../dist:/poet/dist
     networks:
       - queue
       - outside
@@ -113,8 +113,8 @@ services:
       context: ..
       dockerfile: ./Docker/development/retry-eval.dockerfile
     volumes:
-      - ../node/src:/poet/src
-      - ../node/dist:/poet/dist
+      - ../src:/poet/src
+      - ../dist:/poet/dist
     networks:
       - queue
       - outside
@@ -130,8 +130,8 @@ services:
       context: ..
       dockerfile: ./Docker/development/explorer.dockerfile
     volumes:
-      - ../node/src:/poet/src
-      - ../node/dist:/poet/dist
+      - ../src:/poet/src
+      - ../dist:/poet/dist
     networks:
       - db
       - http
@@ -148,9 +148,9 @@ services:
       context: ..
       dockerfile: ./Docker/development/torrent-system.dockerfile
     volumes:
-      - ../node/src:/poet/src
-      - ../node/torrents:/poet/torrents
-      - ../node/dist:/poet/dist
+      - ../src:/poet/src
+      - ../torrents:/poet/torrents
+      - ../dist:/poet/dist
     networks:
       - queue
       - http
@@ -168,8 +168,8 @@ services:
       context: ..
       dockerfile: ./Docker/development/trusted-publisher.dockerfile
     volumes:
-      - ../node/src:/poet/src
-      - ../node/dist:/poet/dist
+      - ../src:/poet/src
+      - ../dist:/poet/dist
     networks:
       - queue
       - http
@@ -202,9 +202,7 @@ services:
     container_name: nginx
     build:
       context: ..
-      dockerfile: ./Docker/nginx/nginx.dockerfile
-    volumes:
-      - ../node/nginx.conf:/etc/nginx/nginx.conf:ro
+      dockerfile: ./Docker/nginx.dockerfile
     restart: always
     networks:
       - http
@@ -221,25 +219,6 @@ services:
       - auth
       - trusted-publisher
       - mock-signer
-
-  web:
-    env_file:
-      - ./env/web/development.env
-    build:
-      context: ..
-      dockerfile: ./Docker/web-poet-js-local.dockerfile
-    volumes:
-      - ../web/src:/web/src
-      - ../web/env:/web/env
-    networks:
-      - http
-      - outside
-    ports:
-      - "3000:3000"
-    links:
-      - nginx
-    depends_on:
-      - nginx
 
 networks:
   db:

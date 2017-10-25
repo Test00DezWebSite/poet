@@ -1,6 +1,6 @@
 FROM poet-base
 
-COPY ["./node/config/notifications.json", "/etc/poet/notifications.json"]
+COPY ["./config/notifications.json", "/etc/poet/notifications.json"]
 
 VOLUME /poet/src
 VOLUME /poet/dist

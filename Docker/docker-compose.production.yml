@@ -8,7 +8,7 @@ services:
       context: ..
       dockerfile: ./Docker/auth.dockerfile
     volumes:
-      - ../node/src:/poet/src
+      - ../src:/poet/src
     networks:
       - http
       - queue
@@ -22,7 +22,7 @@ services:
       context: ..
       dockerfile: ./Docker/notifications.dockerfile
     volumes:
-      - ../node/src:/poet/src
+      - ../src:/poet/src
     networks:
       - http
       - queue
@@ -37,7 +37,7 @@ services:
       context: ..
       dockerfile: ./Docker/mock-signer.dockerfile
     volumes:
-      - ../node/src:/poet/src
+      - ../src:/poet/src
     networks:
       - http
   bitcoin-scanner:
@@ -47,7 +47,7 @@ services:
       context: ..
       dockerfile: ./Docker/bitcoin-scanner.dockerfile
     volumes:
-      - ../node/src:/poet/src
+      - ../src:/poet/src
     networks:
       - queue
       - outside
@@ -58,7 +58,7 @@ services:
       context: ..
       dockerfile: ./Docker/claims-to-db.dockerfile
     volumes:
-      - ../node/src:/poet/src
+      - ../src:/poet/src
     networks:
       - queue
       - outside
@@ -70,7 +70,7 @@ services:
       context: ..
       dockerfile: ./Docker/retry-eval.dockerfile
     volumes:
-      - ../node/src:/poet/src
+      - ../src:/poet/src
     networks:
       - queue
       - outside
@@ -82,7 +82,7 @@ services:
       context: ..
       dockerfile: ./Docker/explorer.dockerfile
     volumes:
-      - ../node/src:/poet/src
+      - ../src:/poet/src
     networks:
       - db
       - http
@@ -93,8 +93,8 @@ services:
       context: ..
       dockerfile: ./Docker/torrent-system.dockerfile
     volumes:
-      - ../node/src:/poet/src
-      - ../node/torrents:/poet/torrents
+      - ../src:/poet/src
+      - ../torrents:/poet/torrents
     networks:
       - queue
       - http
@@ -109,7 +109,7 @@ services:
       context: ..
       dockerfile: ./Docker/trusted-publisher.dockerfile
     volumes:
-      - ../node/src:/poet/src
+      - ../src:/poet/src
     networks:
       - queue
       - http
@@ -140,9 +140,7 @@ services:
     container_name: nginx
     build:
       context: ..
-      dockerfile: ./Docker/nginx/nginx.dockerfile
-    volumes:
-      - ../node/nginx.conf:/etc/nginx/nginx.conf:ro
+      dockerfile: ./Docker/nginx.dockerfile
     restart: always
     networks:
       - http

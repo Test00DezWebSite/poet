@@ -1,6 +1,6 @@
 FROM poet-base
 
-COPY ["./node/config/explorer.json", "/etc/poet/explorer.json"]
+COPY ["./config/explorer.json", "/etc/poet/explorer.json"]
 
 VOLUME /poet/src
 
